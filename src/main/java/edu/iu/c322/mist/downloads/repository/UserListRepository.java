@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserListRepository extends JpaRepository<CustomerProfile, Integer> {
+    CustomerProfile getCustomerProfileByUsernameEqualsAndPasswordEquals(String username, String password);
 }
