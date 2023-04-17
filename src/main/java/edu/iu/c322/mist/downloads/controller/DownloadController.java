@@ -28,9 +28,7 @@ public class DownloadController {
         if (user.getOwnedGames().contains(game)){
             return game;
         }
-        throw new ResponseStatusException(
-                HttpStatus.UNAUTHORIZED, "specified user does not own game"
-        );
+        throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "specified user does not own game");
     }
 
 
