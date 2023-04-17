@@ -23,7 +23,7 @@ public class DownloadController {
 
     @GetMapping("/{gameId}")
     public Game download(@PathVariable int gameId, @RequestBody UserVerify verify){
-        Game game = gameRepository.findGameById(gameId);
+        Game game = gameRepository.findById(gameId).orElseThrow(() -> new IllegalStateException("game does not exist"));
         CustomerProfile user = userRepository.getCustomerProfileByUsernameEqualsAndPasswordEquals(verify.username(), verify.password());
         if (user.getOwnedGames().contains(game)){
             return game;
