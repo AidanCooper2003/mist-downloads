@@ -23,8 +23,11 @@ public class DownloadController {
 
     @GetMapping("/{gameId}")
     public Game download(@PathVariable int gameId, @RequestBody UserVerify verify){
-        Game game = gameRepository.findById(gameId).orElseThrow(() -> new IllegalStateException("game does not exist"));
+        Game game = gameRepository.findById(gameId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "game does not exist"));
         CustomerProfile user = userRepository.getCustomerProfileByUsernameEqualsAndPasswordEquals(verify.username(), verify.password());
+        if (user == null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "user does not exist");
+        }
         if (user.getOwnedGames().contains(game)){
             return game;
         }
